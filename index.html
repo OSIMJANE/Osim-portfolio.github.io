@@ -1,0 +1,1337 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Осим Карамалишоев — Вайб-кодер и Frontend-разработчик из Душанбе</title>
+    <meta name="description" content="Персональный сайт-визитка Осима Карамалишоева. Вайб-кодинг, современная веб-разработка и UI/UX дизайн из Душанбе, Таджикистан.">
+    
+    <!-- Подключение шрифтов Inter и Space Grotesk -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif'],
+                    },
+                    colors: {
+                        bgDark: '#090d16',
+                        emeraldAccent: '#10b981',
+                        indigoAccent: '#6366f1',
+                        cyanAccent: '#06b6d4',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Адаптивные стили, fluid-типографика clamp(), glassmorphism и анимации -->
+    <style>
+        :root {
+            --bg-primary: #090d16;
+            --accent-emerald: #10b981;
+            --accent-indigo: #6366f1;
+            --accent-cyan: #06b6d4;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            max-width: 100%;
+            overflow-x: hidden;
+            background-color: var(--bg-primary);
+            color: #f8fafc;
+        }
+
+        /* Адаптивная типографика с помощью clamp() для экранов от 360px до 1440px+ */
+        .hero-title {
+            font-size: clamp(2.15rem, 5vw + 1rem, 3.85rem);
+            line-height: 1.1;
+        }
+
+        .section-title {
+            font-size: clamp(1.75rem, 3.2vw + 0.8rem, 2.5rem);
+            line-height: 1.2;
+        }
+
+        /* Фоновые декоративные градиентные пятна */
+        .ambient-glow {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(130px);
+            z-index: -1;
+            pointer-events: none;
+            opacity: 0.42;
+        }
+
+        /* Стеклянные карточки (Glassmorphism) */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.35);
+            transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.3s ease, background 0.3s ease;
+        }
+
+        .glass-card:hover {
+            border-color: rgba(16, 185, 129, 0.38);
+            background: rgba(255, 255, 255, 0.055);
+        }
+
+        /* Яркий градиентный текст */
+        .text-gradient {
+            background: linear-gradient(135deg, #10b981 0%, #06b6d4 50%, #6366f1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Анимация плавного появления при скролле */
+        .reveal-on-scroll {
+            opacity: 0;
+            transform: translateY(22px);
+            transition: opacity 0.65s ease-out, transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .reveal-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Плавное парение карточки профиля */
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+        .animate-float {
+            animation: floatSlow 6s ease-in-out infinite;
+        }
+
+        /* Гарантия удобного касания на мобильных (минимум 44px) */
+        .touch-target {
+            min-height: 44px;
+            min-width: 44px;
+        }
+
+        /* Кастомный скроллбар */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #090d16;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #10b981;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-emerald-500/30 selection:text-emerald-200">
+
+    <!-- Фоновые световые акценты -->
+    <div class="ambient-glow bg-emerald-500/20 w-[340px] sm:w-[460px] h-[340px] sm:h-[460px] -top-24 -left-24"></div>
+    <div class="ambient-glow bg-indigo-500/20 w-[360px] sm:w-[500px] h-[360px] sm:h-[500px] top-1/3 -right-32"></div>
+    <div class="ambient-glow bg-cyan-500/15 w-[320px] sm:w-[420px] h-[320px] sm:h-[420px] bottom-10 left-1/4"></div>
+
+    <!-- =================================================================
+         1. НАВИГАЦИЯ (STICKY HEADER + LIVE DUSHANBE TIME)
+    ================================================================== -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-[#090d16]/85 backdrop-blur-xl border-b border-white/10">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 sm:h-20 gap-2">
+                <!-- Логотип -->
+                <a href="#" class="flex items-center gap-2.5 group shrink-0">
+                    <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-emerald-500 via-cyan-500 to-indigo-600 flex items-center justify-center font-display font-bold text-white text-base sm:text-lg shadow-lg shadow-emerald-500/20 group-hover:scale-105 transition-transform">
+                        OK
+                    </div>
+                    <span class="font-display font-bold text-base sm:text-lg tracking-tight text-white">
+                        OSIM<span class="text-emerald-400">.DEV</span>
+                    </span>
+                </a>
+
+                <!-- Живое время в Душанбе (UTC+5) -->
+                <div class="hidden xl:flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/[0.04] border border-white/10 text-xs text-slate-300">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span>Душанбе:</span>
+                    <span id="dushanbeClock" class="font-mono font-semibold text-white">10:44:29</span>
+                    <span class="text-slate-500">UTC+5</span>
+                </div>
+
+                <!-- Десктопное меню -->
+                <nav class="hidden lg:flex items-center gap-6 text-sm font-medium text-slate-300">
+                    <a href="#about" class="hover:text-emerald-400 transition-colors">Обо мне</a>
+                    <a href="#skills" class="hover:text-emerald-400 transition-colors">Навыки</a>
+                    <a href="#projects" class="hover:text-emerald-400 transition-colors">Проекты</a>
+                    <a href="#workflow" class="hover:text-emerald-400 transition-colors">Процесс</a>
+                    <a href="#prompt-lab" class="hover:text-emerald-400 transition-colors">Промпт-лаб</a>
+                    <a href="#contacts" class="hover:text-emerald-400 transition-colors">Контакты</a>
+                </nav>
+
+                <!-- Кнопка действия + Бургер -->
+                <div class="flex items-center gap-2 sm:gap-3">
+                    <a href="#contacts" class="hidden sm:inline-flex items-center justify-center touch-target px-4 sm:px-5 py-2 rounded-xl text-xs sm:text-sm font-semibold text-white bg-gradient-to-r from-emerald-500 to-indigo-600 hover:from-emerald-400 hover:to-indigo-500 shadow-lg shadow-indigo-500/25 transition-all hover:-translate-y-0.5">
+                        Обсудить проект
+                    </a>
+
+                    <!-- Кнопка мобильного меню -->
+                    <button id="mobileMenuBtn" aria-label="Открыть меню" class="lg:hidden touch-target p-2.5 rounded-xl bg-white/5 border border-white/10 text-slate-200 hover:bg-white/10 transition flex items-center justify-center">
+                        <svg id="menuIconOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                        <svg id="menuIconClose" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Выпадающее мобильное меню -->
+        <div id="mobileMenu" class="lg:hidden bg-[#090d16]/98 backdrop-blur-2xl border-b border-white/10 px-4 pt-3 pb-6 space-y-1.5 max-h-[85vh] overflow-y-auto hidden">
+            <div class="flex items-center justify-between px-4 py-2 mb-2 rounded-xl bg-white/[0.03] border border-white/10 text-xs text-slate-300">
+                <span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-emerald-400"></span> Душанбе, Таджикистан</span>
+                <span id="dushanbeClockMobile" class="font-mono font-semibold text-emerald-400">10:44:29 (UTC+5)</span>
+            </div>
+            <a href="#about" class="mobile-link touch-target flex items-center px-4 py-3 rounded-xl text-base font-medium text-slate-200 hover:bg-white/5 hover:text-emerald-400 transition">Обо мне</a>
+            <a href="#skills" class="mobile-link touch-target flex items-center px-4 py-3 rounded-xl text-base font-medium text-slate-200 hover:bg-white/5 hover:text-emerald-400 transition">Мои навыки</a>
+            <a href="#projects" class="mobile-link touch-target flex items-center px-4 py-3 rounded-xl text-base font-medium text-slate-200 hover:bg-white/5 hover:text-emerald-400 transition">Мои проекты</a>
+            <a href="#workflow" class="mobile-link touch-target flex items-center px-4 py-3 rounded-xl text-base font-medium text-slate-200 hover:bg-white/5 hover:text-emerald-400 transition">Вайб-кодинг процесс</a>
+            <a href="#prompt-lab" class="mobile-link touch-target flex items-center px-4 py-3 rounded-xl text-base font-medium text-slate-200 hover:bg-white/5 hover:text-emerald-400 transition">Промпт-шпаргалка</a>
+            <a href="#lifestyle" class="mobile-link touch-target flex items-center px-4 py-3 rounded-xl text-base font-medium text-slate-200 hover:bg-white/5 hover:text-emerald-400 transition">Вне кода</a>
+            <a href="#contacts" class="mobile-link touch-target flex items-center px-4 py-3 rounded-xl text-base font-medium text-slate-200 hover:bg-white/5 hover:text-emerald-400 transition">Контакты</a>
+            <div class="pt-3">
+                <a href="#contacts" class="mobile-link touch-target flex items-center justify-center w-full px-5 py-3.5 rounded-xl text-base font-semibold text-white bg-gradient-to-r from-emerald-500 to-indigo-600">
+                    Связаться со мной
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="pt-16 sm:pt-20">
+        <!-- =================================================================
+             2. ПРИВЕТСТВИЕ (HERO SECTION)
+        ================================================================== -->
+        <section class="relative py-12 sm:py-20 lg:py-28">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-10 items-center">
+                    
+                    <!-- Левая текстовая колонка -->
+                    <div class="lg:col-span-7 space-y-5 sm:space-y-6 text-center lg:text-left">
+                        <!-- Бейдж локации и статуса -->
+                        <div class="inline-flex flex-wrap items-center justify-center lg:justify-start gap-2 px-3.5 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/25 text-emerald-300 text-xs sm:text-sm font-medium">
+                            <span class="relative flex h-2.5 w-2.5">
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+                            </span>
+                            <span>Душанбе, Таджикистан • Открыт к проектам</span>
+                        </div>
+
+                        <!-- Главный заголовок -->
+                        <h1 class="font-display hero-title font-bold tracking-tight text-white">
+                            <span>Привет, я</span> <br class="hidden sm:inline">
+                            <span class="text-gradient">Осим Карамалишоев</span>
+                        </h1>
+
+                        <!-- Подзаголовок -->
+                        <p class="text-base sm:text-lg lg:text-xl text-slate-300/90 max-w-2xl mx-auto lg:mx-0 leading-relaxed font-normal">
+                            Вайб-кодер и frontend-разработчик из Душанбе. Создаю современные, быстрые и яркие веб-сайты с помощью чистого кода и ИИ-инструментов.
+                        </p>
+
+                        <!-- Кнопки действий -->
+                        <div class="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center justify-center lg:justify-start gap-3.5">
+                            <a href="#projects" class="touch-target px-7 py-3.5 rounded-xl font-semibold text-white bg-gradient-to-r from-emerald-500 via-teal-500 to-indigo-600 hover:from-emerald-400 hover:to-indigo-500 shadow-lg shadow-emerald-500/20 transition-all hover:-translate-y-0.5 flex items-center justify-center gap-2">
+                                <span>Смотреть проекты</span>
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                                </svg>
+                            </a>
+                            <a href="#contacts" class="touch-target px-7 py-3.5 rounded-xl font-semibold text-slate-200 bg-white/5 hover:bg-white/10 border border-white/15 transition-all flex items-center justify-center gap-2">
+                                <span>Обсудить проект</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Правая визуальная карточка специалиста -->
+                    <div class="lg:col-span-5 flex justify-center">
+                        <div class="relative w-full max-w-md animate-float">
+                            <div class="absolute -inset-1 rounded-3xl bg-gradient-to-r from-emerald-500 via-cyan-500 to-indigo-600 opacity-30 blur-xl"></div>
+                            
+                            <div class="relative glass-card rounded-3xl p-6 sm:p-8 overflow-hidden">
+                                <!-- Верхняя панель окна -->
+                                <div class="flex items-center justify-between pb-4 mb-6 border-b border-white/10">
+                                    <div class="flex items-center gap-2">
+                                        <span class="w-3 h-3 rounded-full bg-rose-500/80"></span>
+                                        <span class="w-3 h-3 rounded-full bg-amber-400/80"></span>
+                                        <span class="w-3 h-3 rounded-full bg-emerald-500/80"></span>
+                                    </div>
+                                    <span class="text-xs font-mono text-slate-400">vibe-coding / dushanbe</span>
+                                </div>
+
+                                <!-- Аватар с возможностью загрузки фото -->
+                                <div class="flex flex-col items-center text-center">
+                                    <div class="relative group mb-5">
+                                        <div class="w-32 h-32 sm:w-36 sm:h-36 rounded-2xl p-1 bg-gradient-to-br from-emerald-400 via-cyan-500 to-indigo-600 shadow-xl">
+                                            <div id="avatarContainer" class="w-full h-full rounded-[14px] bg-[#0f1626] flex items-center justify-center overflow-hidden relative">
+                                                <!-- Стилизованный SVG портрет/эмблема Памира и кода -->
+                                                <svg id="defaultAvatarSvg" class="w-full h-full" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <rect width="160" height="160" fill="#0D1424"></rect>
+                                                    <circle cx="125" cy="35" r="45" fill="#10B981" fill-opacity="0.24"></circle>
+                                                    <circle cx="30" cy="130" r="50" fill="#6366F1" fill-opacity="0.28"></circle>
+                                                    <!-- Силуэт гор Памира -->
+                                                    <path d="M12 132L52 78L76 105L104 66L148 132H12Z" fill="url(#pamirGrad)" fill-opacity="0.28"></path>
+                                                    <path d="M80 24L128 52V108L80 136L32 108V52L80 24Z" stroke="url(#hexGrad)" stroke-width="2.5"></path>
+                                                    <text x="80" y="90" text-anchor="middle" fill="#F8FAFC" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="34" letter-spacing="2">OK</text>
+                                                    <defs>
+                                                        <linearGradient id="hexGrad" x1="32" y1="24" x2="128" y2="136" gradientUnits="userSpaceOnUse">
+                                                            <stop stop-color="#10B981"></stop>
+                                                            <stop offset="0.5" stop-color="#06B6D4"></stop>
+                                                            <stop offset="1" stop-color="#6366F1"></stop>
+                                                        </linearGradient>
+                                                        <linearGradient id="pamirGrad" x1="80" y1="66" x2="80" y2="132" gradientUnits="userSpaceOnUse">
+                                                            <stop stop-color="#06B6D4"></stop>
+                                                            <stop offset="1" stop-color="#090D16" stop-opacity="0"></stop>
+                                                        </linearGradient>
+                                                    </defs>
+                                                </svg>
+                                                <img id="customAvatarImg" src="" alt="Осим Карамалишоев" class="hidden w-full h-full object-cover">
+                                            </div>
+                                        </div>
+                                        <!-- Кнопка загрузки фото -->
+                                        <label for="avatarUpload" title="Загрузить свое фото" class="touch-target absolute -bottom-2 -right-2 w-10 h-10 rounded-xl bg-slate-800 hover:bg-emerald-500 text-white border border-white/15 flex items-center justify-center cursor-pointer shadow-lg transition-colors">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path>
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                            </svg>
+                                        </label>
+                                        <input type="file" id="avatarUpload" accept="image/*" class="hidden">
+                                    </div>
+
+                                    <h2 class="font-display font-bold text-xl text-white">Осим Карамалишоев</h2>
+                                    <p class="text-sm text-emerald-400 font-medium mt-1">Vibe-Coder &amp; Frontend Developer</p>
+                                    <p class="text-xs text-slate-400 mt-1">Душанбе • Таджикистан (UTC+5)</p>
+
+                                    <div class="flex flex-wrap justify-center gap-2 mt-5">
+                                        <span class="px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-xs text-slate-300">HTML5 / CSS3</span>
+                                        <span class="px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-xs text-slate-300">AI Prompting</span>
+                                        <span class="px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-xs text-slate-300">Mobile-First</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- =================================================================
+             3. ОБО МНЕ (ABOUT — БЕЗ ЗАГЛУШЕК, РЕАЛЬНАЯ ИСТОРИЯ ОСИМА)
+        ================================================================== -->
+        <section id="about" class="py-14 sm:py-20 reveal-on-scroll is-visible">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="glass-card rounded-3xl p-6 sm:p-10 lg:p-12">
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+                        <div class="lg:col-span-7 space-y-5">
+                            <div class="inline-flex items-center gap-2 text-emerald-400 text-xs sm:text-sm font-semibold uppercase tracking-wider">
+                                <span class="w-8 h-[2px] bg-emerald-400"></span>
+                                <span>Обо мне</span>
+                            </div>
+                            <h2 class="font-display section-title font-bold text-white">
+                                Соединяю системный взгляд ученого, вайб-кодинг и эстетику веб-дизайна
+                            </h2>
+                            <p class="text-slate-300 leading-relaxed text-base sm:text-lg">
+                                Меня зовут Осим Карамалишоев, я живу и создаю веб-проекты в Душанбе. Мой путь в IT построен вокруг вайб-кодинга — современного подхода, где глубокое понимание фронтенда (HTML5, CSS3, JavaScript) усиливается точным управлением ИИ-инструментами.
+                            </p>
+                            <p class="text-slate-400 leading-relaxed text-sm sm:text-base">
+                                Помимо разработки сайтов и интерфейсов, я учусь на 1-ом курсе в Техническом университете по специальности "Компьютерные сети и интернет технологии", вдохновляюсь природой Памира и играю на гитаре. Научный бэкграунд помогает мне структурировать сложные данные в понятные интерфейсы, а музыка и визуальный вкус — делать их живыми и запоминающимися.
+                            </p>
+                        </div>
+
+                        <!-- 3 ключевые карточки-факта -->
+                        <div class="lg:col-span-5 grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-1 gap-4">
+                            <div class="p-5 rounded-2xl bg-white/[0.03] border border-white/10 hover:border-emerald-500/40 transition flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center font-display font-bold text-emerald-400 text-xl shrink-0">
+                                    AI+
+                                </div>
+                                <div>
+                                    <div class="font-display font-bold text-white text-base">Вайб-кодинг</div>
+                                    <div class="text-xs sm:text-sm text-slate-400 mt-0.5">От идеи до рабочего прототипа за часы</div>
+                                </div>
+                            </div>
+
+                            <div class="p-5 rounded-2xl bg-white/[0.03] border border-white/10 hover:border-cyan-500/40 transition flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-xl bg-cyan-500/15 border border-cyan-500/30 flex items-center justify-center font-display font-bold text-cyan-400 text-xl shrink-0">
+                                    100%
+                                </div>
+                                <div>
+                                    <div class="font-display font-bold text-white text-base">Адаптивность</div>
+                                    <div class="text-xs sm:text-sm text-slate-400 mt-0.5">Идеально на смартфонах 360px и 4K-экранах</div>
+                                </div>
+                            </div>
+
+                            <div class="p-5 rounded-2xl bg-white/[0.03] border border-white/10 hover:border-indigo-500/40 transition flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-xl bg-indigo-500/15 border border-indigo-500/30 flex items-center justify-center font-display font-bold text-indigo-400 text-xl shrink-0">
+                                    TJ
+                                </div>
+                                <div>
+                                    <div class="font-display font-bold text-white text-base">Душанбе &amp; Мир</div>
+                                    <div class="text-xs sm:text-sm text-slate-400 mt-0.5">Локальные бренды и международные проекты</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =================================================================
+             4. МОИ НАВЫКИ (SKILLS)
+        ================================================================== -->
+        <section id="skills" class="py-14 sm:py-20 reveal-on-scroll is-visible">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-2xl mx-auto mb-12">
+                    <div class="inline-flex items-center gap-2 text-emerald-400 text-xs sm:text-sm font-semibold uppercase tracking-wider mb-3">
+                        <span>Компетенции</span>
+                    </div>
+                    <h2 class="font-display section-title font-bold text-white">
+                        Мои навыки и инструменты
+                    </h2>
+                    <p class="text-slate-400 mt-3 text-sm sm:text-base">
+                        Сбалансированный стек для создания современных сайтов, интерфейсов и визуальных презентаций.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+                    <!-- Карточка 1 -->
+                    <div class="glass-card rounded-3xl p-7 flex flex-col justify-between">
+                        <div>
+                            <div class="w-12 h-12 rounded-2xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400 mb-6">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+                                </svg>
+                            </div>
+                            <h3 class="font-display text-xl font-bold text-white mb-3">Frontend и Верстка</h3>
+                            <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                                Семантический HTML5, современный CSS3 (Grid, Flexbox, анимации) и чистый JavaScript без лишних зависимостей.
+                            </p>
+                        </div>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 text-xs font-medium">HTML5</span>
+                            <span class="px-3 py-1.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 text-xs font-medium">CSS3 Grid/Flex</span>
+                            <span class="px-3 py-1.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 text-xs font-medium">Vanilla JS</span>
+                            <span class="px-3 py-1.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 text-xs font-medium">Responsive UI</span>
+                        </div>
+                    </div>
+
+                    <!-- Карточка 2 -->
+                    <div class="glass-card rounded-3xl p-7 flex flex-col justify-between">
+                        <div>
+                            <div class="w-12 h-12 rounded-2xl bg-cyan-500/15 border border-cyan-500/30 flex items-center justify-center text-cyan-400 mb-6">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="font-display text-xl font-bold text-white mb-3">Vibe-Coding и ИИ</h3>
+                            <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                                Проектирование архитектуры через точные промпты, генерация интерфейсов, ИИ-ретушь и создание визуального контента.
+                            </p>
+                        </div>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1.5 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 text-xs font-medium">Prompt Engineering</span>
+                            <span class="px-3 py-1.5 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 text-xs font-medium">Generative UI</span>
+                            <span class="px-3 py-1.5 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 text-xs font-medium">AI Visuals</span>
+                            <span class="px-3 py-1.5 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 text-xs font-medium">Rapid Prototyping</span>
+                        </div>
+                    </div>
+
+                    <!-- Карточка 3 -->
+                    <div class="glass-card rounded-3xl p-7 flex flex-col justify-between">
+                        <div>
+                            <div class="w-12 h-12 rounded-2xl bg-indigo-500/15 border border-indigo-500/30 flex items-center justify-center text-indigo-400 mb-6">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"></path>
+                                </svg>
+                            </div>
+                            <h3 class="font-display text-xl font-bold text-white mb-3">Дизайн и Аналитика</h3>
+                            <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                                Продуманная типографика, удобная навигация, структурирование контента и внимание к каждой детали интерфейса.
+                            </p>
+                        </div>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1.5 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 text-xs font-medium">UI/UX Прототипы</span>
+                            <span class="px-3 py-1.5 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 text-xs font-medium">Типографика</span>
+                            <span class="px-3 py-1.5 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 text-xs font-medium">Git / GitHub</span>
+                            <span class="px-3 py-1.5 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 text-xs font-medium">Системный анализ</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =================================================================
+             5. МОИ ПРОЕКТЫ (3 РЕАЛЬНЫХ ПРОЕКТА ОСИМА)
+        ================================================================== -->
+        <section id="projects" class="py-14 sm:py-20 reveal-on-scroll is-visible">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+                    <div>
+                        <div class="inline-flex items-center gap-2 text-emerald-400 text-xs sm:text-sm font-semibold uppercase tracking-wider mb-3">
+                            <span class="w-8 h-[2px] bg-emerald-400"></span>
+                            <span>Портфолио</span>
+                        </div>
+                        <h2 class="font-display section-title font-bold text-white">
+                            Мои проекты
+                        </h2>
+                    </div>
+
+                    <!-- Фильтры проектов -->
+                    <div class="flex flex-wrap gap-2" id="projectFilters">
+                        <button data-filter="all" class="filter-btn touch-target active px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-emerald-500 text-slate-950 transition">
+                            Все проекты
+                        </button>
+                        <button data-filter="business" class="filter-btn touch-target px-4 py-2 rounded-xl text-xs sm:text-sm font-medium bg-white/5 text-slate-300 hover:bg-white/10 border border-white/10 transition">
+                            Для бизнеса
+                        </button>
+                        <button data-filter="web-app" class="filter-btn touch-target px-4 py-2 rounded-xl text-xs sm:text-sm font-medium bg-white/5 text-slate-300 hover:bg-white/10 border border-white/10 transition">
+                            ИИ-интерфейсы
+                        </button>
+                        <button data-filter="interactive" class="filter-btn touch-target px-4 py-2 rounded-xl text-xs sm:text-sm font-medium bg-white/5 text-slate-300 hover:bg-white/10 border border-white/10 transition">
+                            Интерактив
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Сетка из 3 карточек проектов -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8" id="projectsGrid">
+                    
+                    <!-- Проект 1: OSIMJANE -->
+                    <article data-category="business" data-project-id="0" class="project-card glass-card rounded-3xl overflow-hidden flex flex-col justify-between group cursor-pointer">
+                        <div>
+                            <div class="h-48 relative overflow-hidden bg-gradient-to-br from-emerald-950/90 via-slate-900 to-amber-900/45 p-6 flex flex-col justify-between border-b border-white/10">
+                                <div class="flex justify-between items-center">
+                                    <span class="px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-400/30 text-emerald-300 text-xs font-medium">HoReCa / Ресторан</span>
+                                    <span class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white group-hover:bg-emerald-500 group-hover:text-slate-950 transition">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                                        </svg>
+                                    </span>
+                                </div>
+                                <div class="p-3.5 rounded-xl bg-white/5 border border-white/10 backdrop-blur-sm translate-y-1 group-hover:translate-y-0 transition-transform">
+                                    <div class="flex items-center justify-between">
+                                        <div>
+                                            <div class="text-xs font-display font-bold text-amber-300">osimjanerest.tj</div>
+                                            <div class="text-[11px] text-slate-300 mt-0.5">Ширчай • VIP-залы • 4 языка</div>
+                                        </div>
+                                        <span class="px-2.5 py-1 rounded-lg bg-emerald-500/25 text-emerald-300 text-[10px] font-bold">Бронь</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="p-6">
+                                <h3 class="font-display text-xl font-bold text-white group-hover:text-emerald-400 transition-colors">
+                                    OSIMJANE — Ресторан памирской и мировой кухни
+                                </h3>
+                                <p class="text-slate-400 text-sm mt-2.5 leading-relaxed">
+                                    Веб-сайт ресторана osimjanerest.tj с мультиязычным сервисом, бронированием VIP-залов и подачей традиционного меню, включая памирский ширчай.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="px-6 pb-6 pt-2 flex flex-wrap gap-2">
+                            <span class="text-xs px-2.5 py-1 rounded-lg bg-white/5 text-slate-300">Multi-language</span>
+                            <span class="text-xs px-2.5 py-1 rounded-lg bg-white/5 text-slate-300">VIP Booking</span>
+                            <span class="text-xs px-2.5 py-1 rounded-lg bg-white/5 text-slate-300">Mobile-First</span>
+                        </div>
+                    </article>
+
+                    <!-- Проект 2: NEXORA AI -->
+                    <article data-category="web-app" data-project-id="1" class="project-card glass-card rounded-3xl overflow-hidden flex flex-col justify-between group cursor-pointer">
+                        <div>
+                            <div class="h-48 relative overflow-hidden bg-gradient-to-br from-indigo-950/90 via-slate-900 to-cyan-900/50 p-6 flex flex-col justify-between border-b border-white/10">
+                                <div class="flex justify-between items-center">
+                                    <span class="px-3 py-1 rounded-full bg-indigo-500/20 border border-indigo-400/30 text-indigo-300 text-xs font-medium">AI Chat Interface</span>
+                                    <span class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white group-hover:bg-emerald-500 group-hover:text-slate-950 transition">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                                        </svg>
+                                    </span>
+                                </div>
+                                <div class="grid grid-cols-12 gap-2 translate-y-1 group-hover:translate-y-0 transition-transform">
+                                    <div class="col-span-4 h-14 rounded-lg bg-white/5 border border-white/10 p-2 space-y-1.5">
+                                        <div class="h-1.5 w-full rounded bg-indigo-400/50"></div>
+                                        <div class="h-1.5 w-3/4 rounded bg-white/20"></div>
+                                        <div class="h-1.5 w-2/3 rounded bg-white/20"></div>
+                                    </div>
+                                    <div class="col-span-8 h-14 rounded-lg bg-cyan-500/15 border border-cyan-400/25 p-2 flex flex-col justify-between">
+                                        <div class="h-2 w-2/3 rounded bg-cyan-300/60"></div>
+                                        <div class="h-4 w-full rounded bg-slate-950/60 border border-white/10"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="p-6">
+                                <h3 class="font-display text-xl font-bold text-white group-hover:text-emerald-400 transition-colors">
+                                    AUF AI — Темный интерфейс ИИ-ассистента
+                                </h3>
+                                <p class="text-slate-400 text-sm mt-2.5 leading-relaxed">
+                                    Адаптивный веб-интерфейс чата с боковой панелью, историей диалогов, быстрыми подсказками и чистой версткой на HTML5 и CSS3.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="px-6 pb-6 pt-2 flex flex-wrap gap-2">
+                            <span class="text-xs px-2.5 py-1 rounded-lg bg-white/5 text-slate-300">HTML5 / CSS3</span>
+                            <span class="text-xs px-2.5 py-1 rounded-lg bg-white/5 text-slate-300">Dark UI</span>
+                            <span class="text-xs px-2.5 py-1 rounded-lg bg-white/5 text-slate-300">Sidebar Layout</span>
+                        </div>
+                    </article>
+
+                    <!-- Проект 3: Интерактивная 10-слайдовая веб-презентация -->
+                    <article data-category="interactive" data-project-id="2" class="project-card glass-card rounded-3xl overflow-hidden flex flex-col justify-between group cursor-pointer">
+                        <div>
+                            <div class="h-48 relative overflow-hidden bg-gradient-to-br from-slate-900 via-teal-950/70 to-indigo-950/80 p-6 flex flex-col justify-between border-b border-white/10">
+                                <div class="flex justify-between items-center">
+                                    <span class="px-3 py-1 rounded-full bg-cyan-500/20 border border-cyan-400/30 text-cyan-300 text-xs font-medium">Web Deck / 10 Slides</span>
+                                    <span class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white group-hover:bg-emerald-500 group-hover:text-slate-950 transition">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                                        </svg>
+                                    </span>
+                                </div>
+                                <div class="flex items-center justify-between gap-2 p-3 rounded-xl bg-white/5 border border-white/10 translate-y-1 group-hover:translate-y-0 transition-transform">
+                                    <span class="px-2 py-1 rounded bg-white/10 text-[10px] font-mono text-slate-300">← Prev</span>
+                                    <div class="flex gap-1">
+                                        <span class="w-4 h-1.5 rounded-full bg-emerald-400"></span>
+                                        <span class="w-1.5 h-1.5 rounded-full bg-white/30"></span>
+                                        <span class="w-1.5 h-1.5 rounded-full bg-white/30"></span>
+                                        <span class="w-1.5 h-1.5 rounded-full bg-white/30"></span>
+                                    </div>
+                                    <span class="px-2 py-1 rounded bg-emerald-500/25 text-[10px] font-mono text-emerald-300">Next →</span>
+                                </div>
+                            </div>
+
+                            <div class="p-6">
+                                <h3 class="font-display text-xl font-bold text-white group-hover:text-emerald-400 transition-colors">
+                                    Интерактивная 10-слайдовая веб-презентация
+                                </h3>
+                                <p class="text-slate-400 text-sm mt-2.5 leading-relaxed">
+                                    Динамическая HTML-презентация с навигацией с клавиатуры и свайпами, плавными CSS-переходами и умной резервной загрузкой изображений.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="px-6 pb-6 pt-2 flex flex-wrap gap-2">
+                            <span class="text-xs px-2.5 py-1 rounded-lg bg-white/5 text-slate-300">JavaScript</span>
+                            <span class="text-xs px-2.5 py-1 rounded-lg bg-white/5 text-slate-300">Keyboard &amp; Touch</span>
+                            <span class="text-xs px-2.5 py-1 rounded-lg bg-white/5 text-slate-300">Fallback Assets</span>
+                        </div>
+                    </article>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- =================================================================
+             6. ДОПОЛНИТЕЛЬНЫЙ БЛОК 1: ВАЙБ-КОДИНГ ПАЙПЛАЙН (КАК Я РАБОТАЮ)
+        ================================================================== -->
+        <section id="workflow" class="py-14 sm:py-20 reveal-on-scroll is-visible">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-2xl mx-auto mb-12">
+                    <div class="inline-flex items-center gap-2 text-cyan-400 text-xs sm:text-sm font-semibold uppercase tracking-wider mb-3">
+                        <span>Методология</span>
+                    </div>
+                    <h2 class="font-display section-title font-bold text-white">
+                        Как я работаю: Вайб-кодинг пайплайн
+                    </h2>
+                    <p class="text-slate-400 mt-3 text-sm sm:text-base">
+                        Четыре шага, которые позволяют превращать идею в готовый, адаптивный сайт без лишней рутины.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                    <!-- Шаг 1 -->
+                    <div class="glass-card rounded-3xl p-6 relative overflow-hidden">
+                        <div class="font-display text-4xl font-bold text-emerald-500/20 mb-3">01</div>
+                        <h3 class="font-display text-lg font-bold text-white mb-2">Идея и промпт-архитектура</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed">
+                            Формулирую задачу, целевую аудиторию, структуру блоков и задаю точный контекст для ИИ.
+                        </p>
+                    </div>
+
+                    <!-- Шаг 2 -->
+                    <div class="glass-card rounded-3xl p-6 relative overflow-hidden">
+                        <div class="font-display text-4xl font-bold text-cyan-500/20 mb-3">02</div>
+                        <h3 class="font-display text-lg font-bold text-white mb-2">Быстрый прототип</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed">
+                            Собираю рабочий каркас страницы в одном HTML-файле с живой логикой на JavaScript.
+                        </p>
+                    </div>
+
+                    <!-- Шаг 3 -->
+                    <div class="glass-card rounded-3xl p-6 relative overflow-hidden">
+                        <div class="font-display text-4xl font-bold text-indigo-500/20 mb-3">03</div>
+                        <h3 class="font-display text-lg font-bold text-white mb-2">Адаптив и полировка UI</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed">
+                            Настраиваю сетку под телефоны и планшеты, выверяю контраст, шрифты и микроанимации.
+                        </p>
+                    </div>
+
+                    <!-- Шаг 4 -->
+                    <div class="glass-card rounded-3xl p-6 relative overflow-hidden">
+                        <div class="font-display text-4xl font-bold text-emerald-500/20 mb-3">04</div>
+                        <h3 class="font-display text-lg font-bold text-white mb-2">Тест и запуск</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed">
+                            Проверяю скорость загрузки, работу всех кнопок и передаю чистый, готовый к публикации код.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =================================================================
+             7. ДОПОЛНИТЕЛЬНЫЙ БЛОК 2: ПРОМПТ-ШПАРГАЛКА И ИНСАЙТЫ (PROMPT LAB)
+        ================================================================== -->
+        <section id="prompt-lab" class="py-14 sm:py-20 reveal-on-scroll is-visible">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+                    <div>
+                        <div class="inline-flex items-center gap-2 text-emerald-400 text-xs sm:text-sm font-semibold uppercase tracking-wider mb-3">
+                            <span class="w-8 h-[2px] bg-emerald-400"></span>
+                            <span>Prompt Lab</span>
+                        </div>
+                        <h2 class="font-display section-title font-bold text-white">
+                            Мои 3 золотых промпта для вайб-кодинга
+                        </h2>
+                    </div>
+                    <p class="text-slate-400 text-sm max-w-md">
+                        Рабочие шаблоны из моей личной шпаргалки — нажмите на кнопку, чтобы скопировать и использовать в своем проекте.
+                    </p>
+                </div>
+
+                <!-- 3 карточки-промпта -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Промпт 1 -->
+                    <div class="glass-card rounded-3xl p-6 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="px-2.5 py-1 rounded-lg bg-emerald-500/15 text-emerald-300 text-xs font-semibold">Промпт #1 • Структура</span>
+                            </div>
+                            <h3 class="font-display text-lg font-bold text-white mb-2">Архитектура лендинга</h3>
+                            <p id="promptText1" class="text-xs sm:text-sm text-slate-300 bg-black/30 border border-white/10 rounded-2xl p-4 font-mono leading-relaxed">
+                                «Выступи как Senior UI/UX дизайнер. Спроектируй одностраничный сайт в одном HTML-файле с темной темой, стеклянным эффектом карточек, четкой иерархией заголовков и живыми текстами без заглушек».
+                            </p>
+                        </div>
+                        <button data-prompt-target="promptText1" class="copy-prompt-btn touch-target mt-4 w-full py-2.5 px-4 rounded-xl bg-white/5 hover:bg-emerald-500/20 border border-white/10 hover:border-emerald-500/40 text-xs sm:text-sm font-semibold text-emerald-300 transition flex items-center justify-center gap-2">
+                            <span>Скопировать промпт</span>
+                        </button>
+                    </div>
+
+                    <!-- Промпт 2 -->
+                    <div class="glass-card rounded-3xl p-6 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="px-2.5 py-1 rounded-lg bg-cyan-500/15 text-cyan-300 text-xs font-semibold">Промпт #2 • Адаптив</span>
+                            </div>
+                            <h3 class="font-display text-lg font-bold text-white mb-2">Идеальный Mobile-First</h3>
+                            <p id="promptText2" class="text-xs sm:text-sm text-slate-300 bg-black/30 border border-white/10 rounded-2xl p-4 font-mono leading-relaxed">
+                                «Проверь верстку на экранах от 360px до 1440px: убери горизонтальный скролл, сделай шрифты через clamp(), перестрой сетку в 1 колонку на телефоне и увеличь кнопки до 44px для удобного нажатия».
+                            </p>
+                        </div>
+                        <button data-prompt-target="promptText2" class="copy-prompt-btn touch-target mt-4 w-full py-2.5 px-4 rounded-xl bg-white/5 hover:bg-cyan-500/20 border border-white/10 hover:border-cyan-500/40 text-xs sm:text-sm font-semibold text-cyan-300 transition flex items-center justify-center gap-2">
+                            <span>Скопировать промпт</span>
+                        </button>
+                    </div>
+
+                    <!-- Промпт 3 -->
+                    <div class="glass-card rounded-3xl p-6 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="px-2.5 py-1 rounded-lg bg-indigo-500/15 text-indigo-300 text-xs font-semibold">Промпт #3 • Интерактив</span>
+                            </div>
+                            <h3 class="font-display text-lg font-bold text-white mb-2">Чистый JS без библиотек</h3>
+                            <p id="promptText3" class="text-xs sm:text-sm text-slate-300 bg-black/30 border border-white/10 rounded-2xl p-4 font-mono leading-relaxed">
+                                «Добавь на чистом JavaScript фильтрацию карточек по категориям, модальное окно с подробностями, копирование контактов в один клик с всплывающим toast-уведомлением и валидацию формы».
+                            </p>
+                        </div>
+                        <button data-prompt-target="promptText3" class="copy-prompt-btn touch-target mt-4 w-full py-2.5 px-4 rounded-xl bg-white/5 hover:bg-indigo-500/20 border border-white/10 hover:border-indigo-500/40 text-xs sm:text-sm font-semibold text-indigo-300 transition flex items-center justify-center gap-2">
+                            <span>Скопировать промпт</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Блок инсайта: чему научил опыт работы с ИИ -->
+                <div class="mt-6 glass-card rounded-2xl p-5 sm:p-6 border-l-4 border-l-amber-400 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                    <div class="w-10 h-10 rounded-xl bg-amber-500/15 text-amber-400 flex items-center justify-center shrink-0 font-display font-bold">
+                        !
+                    </div>
+                    <div class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                        <strong class="text-white">Главный инсайт работы с ИИ:</strong> если попросить модель просто «сделать красивый сайт», она сгенерирует шаблонные заглушки. Лучший результат появляется тогда, когда ты задаешь реальный контекст, конкретные цвета, структуру блоков и ограничения по адаптивности.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =================================================================
+             8. ДОПОЛНИТЕЛЬНЫЙ БЛОК 3: ВНЕ КОДА (ДУШАНБЕ, ПАМИР, ГИТАРА, ЭКОЛОГИЯ)
+        ================================================================== -->
+        <section id="lifestyle" class="py-14 sm:py-20 reveal-on-scroll is-visible">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-2xl mx-auto mb-12">
+                    <div class="inline-flex items-center gap-2 text-indigo-400 text-xs sm:text-sm font-semibold uppercase tracking-wider mb-3">
+                        <span>Личность и вдохновение</span>
+                    </div>
+                    <h2 class="font-display section-title font-bold text-white">
+                        Вне кода: что формирует мой вайб
+                    </h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Карточка 1 -->
+                    <div class="glass-card rounded-3xl p-6">
+                        <div class="w-11 h-11 rounded-2xl bg-emerald-500/15 text-emerald-400 flex items-center justify-center mb-4">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="font-display text-lg font-bold text-white mb-2">Душанбе и эстетика Памира</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed">
+                            Контраст солнечного Душанбе и величественных гор Памира вдохновляет меня на глубокие цветовые палитры, чистоту линий и атмосферу гостеприимства в цифровых проектах.
+                        </p>
+                    </div>
+
+                    <!-- Карточка 2 -->
+                    <div class="glass-card rounded-3xl p-6">
+                        <div class="w-11 h-11 rounded-2xl bg-cyan-500/15 text-cyan-400 flex items-center justify-center mb-4">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path>
+                            </svg>
+                        </div>
+                        <h3 class="font-display text-lg font-bold text-white mb-2">Акустическая гитара и ритм</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed">
+                            Игра на гитаре учит чувствовать ритм и гармонию. В веб-дизайне это превращается в сбалансированные отступы, плавные переходы и правильный темп подачи информации.
+                        </p>
+                    </div>
+
+                    <!-- Карточка 3 -->
+                    <div class="glass-card rounded-3xl p-6">
+                        <div class="w-11 h-11 rounded-2xl bg-indigo-500/15 text-indigo-400 flex items-center justify-center mb-4">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="font-display text-lg font-bold text-white mb-2">Биология и экосистемы</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed">
+                            Исследование природных экосистем и биоразнообразия привило привычку видеть любой сайт как единый живой организм, где каждый элемент влияет на общий результат.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =================================================================
+             9. КОНТАКТЫ И ФОРМА ОБРАТНОЙ СВЯЗИ
+        ================================================================== -->
+        <section id="contacts" class="py-14 sm:py-20 reveal-on-scroll is-visible">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
+                    
+                    <!-- Левая колонка: Прямые контакты -->
+                    <div class="lg:col-span-5 space-y-5">
+                        <div class="inline-flex items-center gap-2 text-emerald-400 text-xs sm:text-sm font-semibold uppercase tracking-wider">
+                            <span class="w-8 h-[2px] bg-emerald-400"></span>
+                            <span>Контакты</span>
+                        </div>
+                        <h2 class="font-display section-title font-bold text-white">
+                            Давайте создадим крутой проект
+                        </h2>
+                        <p class="text-slate-400 text-sm sm:text-base leading-relaxed">
+                            Нахожусь в Душанбе (UTC+5), работаю онлайн по всему миру. Нажмите на любую карточку ниже, чтобы скопировать контакт в один клик.
+                        </p>
+
+                        <!-- Карточки контактов -->
+                        <div class="space-y-3 pt-1">
+                            <!-- Telegram -->
+                            <div data-copy="@os1mjane" class="copy-contact-btn touch-target glass-card rounded-2xl p-4 flex items-center justify-between cursor-pointer group">
+                                <div class="flex items-center gap-3.5 min-w-0">
+                                    <div class="w-11 h-11 rounded-xl bg-sky-500/15 border border-sky-400/30 flex items-center justify-center text-sky-400 shrink-0">
+                                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="truncate">
+                                        <div class="text-xs text-slate-400">Telegram</div>
+                                        <div class="text-sm font-semibold text-white group-hover:text-emerald-400 transition truncate">@os1mjane</div>
+                                    </div>
+                                </div>
+                                <span class="text-xs px-2.5 py-1 rounded-lg bg-white/5 text-slate-400 group-hover:bg-emerald-500/20 group-hover:text-emerald-300 transition shrink-0 ml-2">
+                                    Копировать
+                                </span>
+                            </div>
+
+                            <!-- Email -->
+                            <div data-copy="yatvoytat@gmail.com" class="copy-contact-btn touch-target glass-card rounded-2xl p-4 flex items-center justify-between cursor-pointer group">
+                                <div class="flex items-center gap-3.5 min-w-0">
+                                    <div class="w-11 h-11 rounded-xl bg-emerald-500/15 border border-emerald-400/30 flex items-center justify-center text-emerald-400 shrink-0">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="truncate">
+                                        <div class="text-xs text-slate-400">Email</div>
+                                        <div class="text-sm font-semibold text-white group-hover:text-emerald-400 transition truncate">yatvoytat@gmail.com</div>
+                                    </div>
+                                </div>
+                                <span class="text-xs px-2.5 py-1 rounded-lg bg-white/5 text-slate-400 group-hover:bg-emerald-500/20 group-hover:text-emerald-300 transition shrink-0 ml-2">
+                                    Копировать
+                                </span>
+                            </div>
+
+                            <!-- GitHub -->
+                            <div data-copy="github.com/OSIMJANE" class="copy-contact-btn touch-target glass-card rounded-2xl p-4 flex items-center justify-between cursor-pointer group">
+                                <div class="flex items-center gap-3.5 min-w-0">
+                                    <div class="w-11 h-11 rounded-xl bg-indigo-500/15 border border-indigo-400/30 flex items-center justify-center text-indigo-400 shrink-0">
+                                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="truncate">
+                                        <div class="text-xs text-slate-400">GitHub</div>
+                                        <div class="text-sm font-semibold text-white group-hover:text-emerald-400 transition truncate">github.com/OSIMJANE</div>
+                                    </div>
+                                </div>
+                                <span class="text-xs px-2.5 py-1 rounded-lg bg-white/5 text-slate-400 group-hover:bg-emerald-500/20 group-hover:text-emerald-300 transition shrink-0 ml-2">
+                                    Копировать
+                                </span>
+                            </div>
+
+                            <!-- Локация -->
+                            <div data-copy="Душанбе, Таджикистан" class="copy-contact-btn touch-target glass-card rounded-2xl p-4 flex items-center justify-between cursor-pointer group">
+                                <div class="flex items-center gap-3.5 min-w-0">
+                                    <div class="w-11 h-11 rounded-xl bg-teal-500/15 border border-teal-400/30 flex items-center justify-center text-teal-400 shrink-0">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="truncate">
+                                        <div class="text-xs text-slate-400">Локация</div>
+                                        <div class="text-sm font-semibold text-white group-hover:text-emerald-400 transition truncate">Душанбе, Таджикистан</div>
+                                    </div>
+                                </div>
+                                <span class="text-xs px-2.5 py-1 rounded-lg bg-white/5 text-slate-400 group-hover:bg-emerald-500/20 group-hover:text-emerald-300 transition shrink-0 ml-2">
+                                    Копировать
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Правая колонка: Форма обратной связи -->
+                    <div class="lg:col-span-7">
+                        <div class="glass-card rounded-3xl p-6 sm:p-8 lg:p-10">
+                            <h3 class="font-display text-2xl font-bold text-white mb-2">Написать сообщение</h3>
+                            <p class="text-slate-400 text-sm mb-6">Расскажите о вашей идее или задаче — отвечу в Telegram или по почте.</p>
+
+                            <form id="contactForm" class="space-y-5" novalidate="">
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                                    <div>
+                                        <label for="senderName" class="block text-xs font-medium text-slate-300 mb-2">Ваше имя *</label>
+                                        <input type="text" id="senderName" name="name" required="" placeholder="Например, Рустам" class="touch-target w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition">
+                                    </div>
+                                    <div>
+                                        <label for="senderContact" class="block text-xs font-medium text-slate-300 mb-2">Telegram или Email *</label>
+                                        <input type="text" id="senderContact" name="contact" required="" placeholder="@username или email" class="touch-target w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition">
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label for="senderMessage" class="block text-xs font-medium text-slate-300 mb-2">Сообщение о проекте *</label>
+                                    <textarea id="senderMessage" name="message" rows="4" required="" placeholder="Опишите кратко сайт, лендинг или интерфейс, который нужно разработать..." class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition resize-none"></textarea>
+                                </div>
+
+                                <button type="submit" class="touch-target w-full py-3.5 px-6 rounded-xl font-semibold text-white bg-gradient-to-r from-emerald-500 via-teal-500 to-indigo-600 hover:from-emerald-400 hover:to-indigo-500 shadow-lg shadow-emerald-500/20 transition-all hover:-translate-y-0.5 flex items-center justify-center gap-2">
+                                    <span>Отправить сообщение</span>
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+                                    </svg>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- =================================================================
+         10. ФУТЕР (FOOTER)
+    ================================================================== -->
+    <footer class="border-t border-white/10 bg-[#060910] py-8 mt-8">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p class="text-xs sm:text-sm text-slate-400 text-center sm:text-left">
+                © 2026 Осим Карамалишоев • Сделано с вайб-кодингом в Душанбе.
+            </p>
+            
+            <button id="scrollTopBtn" class="touch-target inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-medium text-slate-300 hover:text-emerald-400 transition">
+                <span>Наверх</span>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+                </svg>
+            </button>
+        </div>
+    </footer>
+
+    <!-- =================================================================
+         МОДАЛЬНОЕ ОКНО ДЕТАЛЕЙ ПРОЕКТА
+    ================================================================== -->
+    <div id="projectModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+        <div class="glass-card bg-[#0d1322]/95 border border-white/15 rounded-3xl max-w-xl w-full p-6 sm:p-8 relative shadow-2xl max-h-[90vh] overflow-y-auto">
+            <button id="closeModalBtn" aria-label="Закрыть окно" class="touch-target absolute top-4 right-4 w-10 h-10 rounded-xl bg-white/5 hover:bg-white/15 flex items-center justify-center text-slate-300 hover:text-white transition">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+
+            <span id="modalCategory" class="inline-block px-3 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-xs font-semibold mb-3">
+                Категория
+            </span>
+            <h3 id="modalTitle" class="font-display text-xl sm:text-2xl font-bold text-white mb-4 pr-8">Название проекта</h3>
+            
+            <div class="space-y-4 text-sm text-slate-300 leading-relaxed">
+                <p id="modalFullDesc"></p>
+                
+                <div class="p-4 rounded-2xl bg-white/[0.03] border border-white/10">
+                    <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Ключевые особенности:</div>
+                    <ul id="modalFeatures" class="space-y-1.5 text-slate-300 list-disc list-inside"></ul>
+                </div>
+
+                <div>
+                    <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Стек технологий:</div>
+                    <div id="modalTags" class="flex flex-wrap gap-2"></div>
+                </div>
+            </div>
+
+            <div class="mt-7 pt-5 border-t border-white/10 flex flex-col sm:flex-row gap-3 justify-end">
+                <button id="modalDiscussBtn" class="touch-target px-5 py-3 rounded-xl font-semibold text-sm text-white bg-gradient-to-r from-emerald-500 to-indigo-600 hover:from-emerald-400 hover:to-indigo-500 transition text-center">
+                    Заказать похожий проект
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- =================================================================
+         ВСПЛЫВАЮЩЕЕ УВЕДОМЛЕНИЕ (TOAST)
+    ================================================================== -->
+    <div id="toastNotification" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 pointer-events-none transition-all duration-300 w-[90%] max-w-md opacity-0 translate-y-4">
+        <div class="px-5 py-3 rounded-2xl bg-slate-900/95 border border-emerald-500/40 text-white text-xs sm:text-sm font-medium shadow-2xl backdrop-blur-xl flex items-center justify-center gap-2.5 text-center">
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 shrink-0"></span>
+            <span id="toastMessage">Скопировано в буфер обмена</span>
+        </div>
+    </div>
+
+    <!-- =================================================================
+         JAVASCRIPT ЛОГИКА
+    ================================================================== -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Всплывающие уведомления (Toast)
+            const toastEl = document.getElementById('toastNotification');
+            const toastMsgEl = document.getElementById('toastMessage');
+            let toastTimer;
+
+            function showToast(message) {
+                toastMsgEl.textContent = message;
+                toastEl.classList.remove('opacity-0', 'translate-y-4');
+                toastEl.classList.add('opacity-100', 'translate-y-0');
+
+                clearTimeout(toastTimer);
+                toastTimer = setTimeout(() => {
+                    toastEl.classList.remove('opacity-100', 'translate-y-0');
+                    toastEl.classList.add('opacity-0', 'translate-y-4');
+                }, 3200);
+            }
+
+            // 2. Живое время в Душанбе (Asia/Dushanbe, UTC+5)
+            const clockDesktop = document.getElementById('dushanbeClock');
+            const clockMobile = document.getElementById('dushanbeClockMobile');
+
+            function updateDushanbeClock() {
+                try {
+                    const now = new Date();
+                    const formatter = new Intl.DateTimeFormat('ru-RU', {
+                        timeZone: 'Asia/Dushanbe',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        second: '2-digit'
+                    });
+                    const timeStr = formatter.format(now);
+                    if (clockDesktop) clockDesktop.textContent = timeStr;
+                    if (clockMobile) clockMobile.textContent = timeStr + ' (UTC+5)';
+                } catch (e) {
+                    if (clockDesktop) clockDesktop.textContent = 'UTC+5';
+                }
+            }
+            updateDushanbeClock();
+            setInterval(updateDushanbeClock, 1000);
+
+            // 3. Мобильное меню
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const menuIconOpen = document.getElementById('menuIconOpen');
+            const menuIconClose = document.getElementById('menuIconClose');
+
+            function toggleMobileMenu() {
+                const isHidden = mobileMenu.classList.toggle('hidden');
+                menuIconOpen.classList.toggle('hidden', !isHidden);
+                menuIconClose.classList.toggle('hidden', isHidden);
+            }
+
+            mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+            document.querySelectorAll('.mobile-link').forEach(link => {
+                link.addEventListener('click', () => {
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        toggleMobileMenu();
+                    }
+                });
+            });
+
+            // 4. Анимация появления блоков при скролле (IntersectionObserver)
+            const revealElements = document.querySelectorAll('.reveal-on-scroll');
+            const revealObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        revealObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            revealElements.forEach(el => revealObserver.observe(el));
+
+            // 5. Плавный скролл наверх
+            document.getElementById('scrollTopBtn').addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            // 6. Загрузка пользовательского фото профиля с сохранением в localStorage
+            const avatarUpload = document.getElementById('avatarUpload');
+            const customAvatarImg = document.getElementById('customAvatarImg');
+            const defaultAvatarSvg = document.getElementById('defaultAvatarSvg');
+
+            const savedAvatar = localStorage.getItem('osim_portfolio_avatar_v2');
+            if (savedAvatar) {
+                customAvatarImg.src = savedAvatar;
+                customAvatarImg.classList.remove('hidden');
+                defaultAvatarSvg.classList.add('hidden');
+            }
+
+            avatarUpload.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (!file) return;
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const dataUrl = event.target.result;
+                    customAvatarImg.src = dataUrl;
+                    customAvatarImg.classList.remove('hidden');
+                    defaultAvatarSvg.classList.add('hidden');
+                    try {
+                        localStorage.setItem('osim_portfolio_avatar_v2', dataUrl);
+                        showToast('Фото профиля обновлено и сохранено!');
+                    } catch (err) {
+                        showToast('Фото обновлено на время текущей сессии');
+                    }
+                };
+                reader.readAsDataURL(file);
+            });
+
+            // 7. Данные и модальное окно проектов
+            const projectsData = [
+                {
+                    category: 'Веб-сайт ресторана • osimjanerest.tj',
+                    title: 'OSIMJANE — Ресторан памирской и мировой кухни',
+                    fullDesc: 'Официальный веб-сайт ресторана OSIMJANE, созданный с акцентом на памирское гостеприимство, премиальную подачу блюд и удобство для местных и иностранных гостей.',
+                    features: [
+                        'Мультиязычный интерфейс для гостей из разных стран',
+                        'Презентация традиционного памирского меню (включая фирменный ширчай) и мировой кухни',
+                        'Удобное онлайн-бронирование столиков и отдельных VIP-залов с телефона'
+                    ],
+                    tags: ['HTML5 / CSS3', 'Multi-language UI', 'VIP Booking', 'Mobile-First', 'osimjanerest.tj']
+                },
+                {
+                    category: 'ИИ-интерфейс • Dark Mode Web App',
+                    title: 'NEXORA AI — Темный интерфейс ИИ-ассистента',
+                    fullDesc: 'Современный веб-интерфейс для взаимодействия с искусственным интеллектом. Разработан с упором на эргономику при длительной работе, четкую контрастность и быструю навигацию по диалогам.',
+                    features: [
+                        'Адаптивная боковая панель (sidebar) с историей чатов и быстрым переключением на мобильных устройствах',
+                        'Контрастная темная тема с мягкими световыми акцентами',
+                        'Чистая семантическая верстка на HTML5 и CSS3 без перегруженных фреймворков'
+                    ],
+                    tags: ['HTML5', 'CSS3 Flexbox/Grid', 'Dark UI Design', 'Responsive Sidebar', 'Vibe-Coding']
+                },
+                {
+                    category: 'Интерактивный веб-продукт • 10 Slides',
+                    title: 'Интерактивная 10-слайдовая веб-презентация',
+                    fullDesc: 'Браузерная презентация нового поколения, которая заменяет тяжелые PDF и PowerPoint-файлы быстрым, адаптивным веб-приложением, открывающимся по одной ссылке.',
+                    features: [
+                        'Управление слайдами с помощью стрелок клавиатуры, кнопок на экране и свайпов на смартфоне',
+                        'Плавные CSS-анимации переходов и индикатор прогресса чтения',
+                        'Умный механизм резервной загрузки (fallback) изображений для стабильной работы при слабом интернете'
+                    ],
+                    tags: ['Vanilla JavaScript', 'CSS Transitions', 'Keyboard & Touch Events', 'Fallback System']
+                }
+            ];
+
+            const projectModal = document.getElementById('projectModal');
+            const closeModalBtn = document.getElementById('closeModalBtn');
+            const modalCategory = document.getElementById('modalCategory');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalFullDesc = document.getElementById('modalFullDesc');
+            const modalFeatures = document.getElementById('modalFeatures');
+            const modalTags = document.getElementById('modalTags');
+            const modalDiscussBtn = document.getElementById('modalDiscussBtn');
+
+            function openProjectModal(index) {
+                const project = projectsData[index];
+                if (!project) return;
+
+                modalCategory.textContent = project.category;
+                modalTitle.textContent = project.title;
+                modalFullDesc.textContent = project.fullDesc;
+
+                modalFeatures.innerHTML = project.features
+                    .map(item => `<li>${item}</li>`)
+                    .join('');
+
+                modalTags.innerHTML = project.tags
+                    .map(tag => `<span class="px-3 py-1 rounded-xl bg-white/5 border border-white/10 text-xs text-slate-300">${tag}</span>`)
+                    .join('');
+
+                projectModal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeProjectModal() {
+                projectModal.classList.add('hidden');
+                document.body.style.overflow = '';
+            }
+
+            document.querySelectorAll('.project-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    const id = parseInt(card.getAttribute('data-project-id'), 10);
+                    openProjectModal(id);
+                });
+            });
+
+            closeModalBtn.addEventListener('click', closeProjectModal);
+            projectModal.addEventListener('click', (e) => {
+                if (e.target === projectModal) closeProjectModal();
+            });
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && !projectModal.classList.contains('hidden')) {
+                    closeProjectModal();
+                }
+            });
+
+            modalDiscussBtn.addEventListener('click', () => {
+                const title = modalTitle.textContent;
+                closeProjectModal();
+                const contactsSection = document.getElementById('contacts');
+                const messageInput = document.getElementById('senderMessage');
+                messageInput.value = `Привет, Осим! Интересует разработка проекта в стиле «${title}».`;
+                contactsSection.scrollIntoView({ behavior: 'smooth' });
+                setTimeout(() => messageInput.focus(), 500);
+            });
+
+            // 8. Фильтрация проектов
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const projectCards = document.querySelectorAll('.project-card');
+
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const filter = btn.getAttribute('data-filter');
+
+                    filterBtns.forEach(b => {
+                        b.classList.remove('bg-emerald-500', 'text-slate-950', 'font-semibold');
+                        b.classList.add('bg-white/5', 'text-slate-300', 'font-medium');
+                    });
+                    btn.classList.remove('bg-white/5', 'text-slate-300', 'font-medium');
+                    btn.classList.add('bg-emerald-500', 'text-slate-950', 'font-semibold');
+
+                    projectCards.forEach(card => {
+                        const category = card.getAttribute('data-category');
+                        if (filter === 'all' || category === filter) {
+                            card.classList.remove('hidden');
+                        } else {
+                            card.classList.add('hidden');
+                        }
+                    });
+                });
+            });
+
+            // 9. Универсальная функция копирования текста в буфер обмена
+            function copyToClipboard(text, successMsg) {
+                const tempInput = document.createElement('textarea');
+                tempInput.value = text;
+                document.body.appendChild(tempInput);
+                tempInput.select();
+                try {
+                    document.execCommand('copy');
+                    showToast(successMsg);
+                } catch (err) {
+                    showToast('Не удалось скопировать текст');
+                }
+                document.body.removeChild(tempInput);
+            }
+
+            // Копирование контактов
+            document.querySelectorAll('.copy-contact-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const textToCopy = btn.getAttribute('data-copy');
+                    if (textToCopy) {
+                        copyToClipboard(textToCopy, `Скопировано: ${textToCopy}`);
+                    }
+                });
+            });
+
+            // Копирование золотых промптов из Prompt Lab
+            document.querySelectorAll('.copy-prompt-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const targetId = btn.getAttribute('data-prompt-target');
+                    const targetEl = document.getElementById(targetId);
+                    if (targetEl) {
+                        copyToClipboard(targetEl.textContent.trim(), 'Промпт скопирован в буфер обмена!');
+                    }
+                });
+            });
+
+            // 10. Валидация и отправка формы обратной связи
+            const contactForm = document.getElementById('contactForm');
+            contactForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const name = document.getElementById('senderName').value.trim();
+                const contact = document.getElementById('senderContact').value.trim();
+                const message = document.getElementById('senderMessage').value.trim();
+
+                if (!name || !contact || !message) {
+                    showToast('Пожалуйста, заполните все обязательные поля');
+                    return;
+                }
+
+                showToast(`Рахмат, ${name}! Сообщение успешно отправлено Осиму.`);
+                contactForm.reset();
+            });
+        });
+    </script>
+
+</body></html>
